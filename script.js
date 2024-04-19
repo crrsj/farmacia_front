@@ -18,7 +18,7 @@ function cadastrarRegistro(nome,imagem,validade,quantidade) {
     };
 
     // Envia os dados para o servidor
-    fetch('http://localhost:8080/remedio/cadastro', {
+    fetch('http://localhost:8080/remedio', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -82,7 +82,7 @@ function validarFormulario() {
 async function fetchDataAndPopulateTable() {
     try {
       // Substitua 'URL_DA_SUA_API' pela URL real da sua API
-      const response = await fetch( 'http://localhost:8080/remedio/listar');
+      const response = await fetch( 'http://localhost:8080/remedio');
       const data = await response.json();
 
       // Limpa a tabela antes de inserir novos dados
@@ -127,7 +127,7 @@ async function updateUserData() {
    
   
     try {
-      const response =  await fetch(`http://localhost:8080/remedio/atualizar`, {
+      const response =  await fetch(`http://localhost:8080/remedio`, {
         method: 'PUT', 
         headers: {
           'Content-Type': 'application/json',
@@ -159,38 +159,7 @@ async function updateUserData() {
   }
  
 
-  function buscarRegistroPorNome() {
-    // Obter o nome do registro de algum elemento HTML, por exemplo, um campo de entrada com o ID "nome"
-    const nome = document.getElementById('nome').value;  
-    // URL da API ou do servidor onde os registros estão armazenados, incluindo o nome como parâmetro de consulta
-    const url = `http://localhost:8080/remedio/buscarNome?nome=${nome}`;
-  
-    // Fazendo a requisição usando fetch
-    fetch(url)
-        .then(response => {
-            // Verifica se a resposta foi bem-sucedida
-            if (!response.ok) {
-                throw new Error('Não foi possível obter o registro');
-            }
-            // Retorna os dados da resposta como JSON
-            return response.json();
-        })
-          .then(user => {                     
-          document.getElementById("id").value = user.id;
-          document.getElementById("nome").value = user.nome;
-          document.getElementById("imagem").value = user.imagem;
-          document.getElementById("validade").value = user.validade;          
-          document.getElementById("quantidade").value = user.quantidade;
-         // document.getElementById("quantidade").value = parseInt(user.quantidade);
-          console.log('Registro encontrado:', user);  
-
-        })
-        .catch(error => {
-            // Captura e trata erros
-            console.error('Ocorreu um erro:', error);
-        });
-        
-  }
+ 
     function preencherFormulario(user) {
     document.getElementById('id').value = user.id;
     document.getElementById('nome').value = user.nome;
@@ -224,7 +193,7 @@ async function updateUserData() {
 }
 
  function buscarPorId(id) {
-   fetch('http://localhost:8080/remedio/buscar/' + id)
+   fetch('http://localhost:8080/remedio/' + id)
     .then(response => response.json())    
     .then(user => {
       preencherFormulario(user) ;
